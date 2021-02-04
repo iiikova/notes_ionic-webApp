@@ -1,20 +1,44 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" color='primary'>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <div class="header">
+
+      <div>
+        <ion-title>
+          Notes
+        </ion-title>
+      </div>
+
+      <div>
+        <ion-button *ngIf='!showForm' size='small' slot="end" color="dark" (click)='showAddForm()'>
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf='showForm' size='small' slot="end" color="danger" (click)='showAddForm()'>
+          <ion-icon name="close-outline"></ion-icon>
+
+        </ion-button>
+      </div>
+
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-add-task *ngIf='showForm'></app-add-task>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  <ion-item lines="none" *ngFor='let task of tasks'>
+    <div class='item' *ngIf='!editState'>
+      <span (click)="editTask($event, task)">{{task.title}}</span>
+    </div>
+
+    <div class='item' *ngIf='editState'>
+
+      <ion-input (dblclick)='updateTask(task)' [(ngModel)]='task.title' name='title'></ion-input>
+
+      <ion-button *ngIf='editState && taskToEdit.id === task.id' slot="end" color='danger'
+        (click)='deleteTask($event, task) ' class="btn">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+
+    </div>
+
+  </ion-item>

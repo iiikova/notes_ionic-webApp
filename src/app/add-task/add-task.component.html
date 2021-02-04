@@ -1,0 +1,12 @@
+<ion-item lines='none'>
+  <form (ngSubmit)='onSubmit()'>
+    <div >
+      <ion-input placeholder='enter task' [(ngModel)]='task.title' name='title'></ion-input>
+    </div>
+    <div>
+      <ion-button size='small' type='submit' value='submit' class="btn">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </form>
+</ion-item>
